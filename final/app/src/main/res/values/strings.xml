@@ -1,0 +1,29 @@
+<!--Copyright 2017 Google Inc.
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.-->
+
+<resources>
+    <string name="app_name">Firebase Monetization Codelab</string>
+    <string name="game_title">Awesome Game</string>
+    <string name="try_again">Play Again!</string>
+    <string name="try_again_title">Failed...</string>
+    <string name="start">START</string>
+    <string name="reward_button_text">Watch an ad and\n play again with hint</string>
+    <string name="hint_text">NOT HERE</string>
+    <string name="home">HOME</string>
+    <string name="congrats">Congratulations!</string>
+    <string name="how_to_play">How To Play</string>
+    <string name="how_to_play_text">Something in the picture is changing very slowly.\nTap on it to win!</string>
+    <string name="ready">Ready?</string>
+    <string name="go">Go!</string>
+</resources>
