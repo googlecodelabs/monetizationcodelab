@@ -20,7 +20,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.ads.reward.RewardItem;
 import com.google.android.gms.ads.reward.RewardedVideoAd;
@@ -28,7 +27,6 @@ import com.google.android.gms.ads.reward.RewardedVideoAdListener;
 import com.google.firebase.codelab.R;
 
 public class FailActivity extends AppCompatActivity implements RewardedVideoAdListener {
-    private static final String DEFAULT_AD_UNIT_ID = "ca-app-pub-0977440612291676/3715912300";
     private static final String HINT_EXTRA_KEY = "hint";
     private static final String HINT_WEIGHT_EXTRA_KEY = "hint_weight";
 
@@ -39,13 +37,6 @@ public class FailActivity extends AppCompatActivity implements RewardedVideoAdLi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fail);
-
-        mAd = MobileAds.getRewardedVideoAdInstance(this);
-        mAd.setRewardedVideoAdListener(this);
-        mAd.loadAd(
-                DEFAULT_AD_UNIT_ID,
-                new AdRequest.Builder().build()
-        );
 
         // Move to GameActivity after showing rewarded video ads if player click
         // "PLAY AGAIN WITH HINT BY WATCHING ADS!" button.
@@ -75,6 +66,19 @@ public class FailActivity extends AppCompatActivity implements RewardedVideoAdLi
                 startActivity(intent);
             }
         });
+
+
+        mAd = MobileAds.getRewardedVideoAdInstance(this);
+        mAd.setRewardedVideoAdListener(this);
+        // If ad is already loaded, show the hint button.
+        if (mAd.isLoaded()) {
+            showHintButton();
+        }
+    }
+
+    private void showHintButton() {
+        Button hint_button = (Button) findViewById(R.id.hint_button);
+        hint_button.setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -88,10 +92,16 @@ public class FailActivity extends AppCompatActivity implements RewardedVideoAdLi
 
     @Override
     public void onRewardedVideoAdClosed() {
-        Intent intent = new Intent(FailActivity.this, GameActivity.class);
-        intent.putExtra(HINT_EXTRA_KEY, true);
-        intent.putExtra(HINT_WEIGHT_EXTRA_KEY, (float)mRewardItem.getAmount());
-        startActivity(intent);
+        if (mRewardItem != null) {
+            Intent intent = new Intent(FailActivity.this, GameActivity.class);
+            intent.putExtra(HINT_EXTRA_KEY, true);
+            float hint_weight = 100.0f / (float) mRewardItem.getAmount() - 1.0f;
+            intent.putExtra(HINT_WEIGHT_EXTRA_KEY, hint_weight);
+            startActivity(intent);
+        } else {
+            Intent intent = new Intent(FailActivity.this, MainActivity.class);
+            startActivity(intent);
+        }
     }
 
     @Override
@@ -100,8 +110,7 @@ public class FailActivity extends AppCompatActivity implements RewardedVideoAdLi
 
     @Override
     public void onRewardedVideoAdLoaded() {
-        Button hint_button = (Button) findViewById(R.id.hint_button);
-        hint_button.setVisibility(View.VISIBLE);
+        showHintButton();
     }
 
     @Override
@@ -110,5 +119,17 @@ public class FailActivity extends AppCompatActivity implements RewardedVideoAdLi
 
     @Override
     public void onRewardedVideoStarted() {
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        mAd.pause(this);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mAd.resume(this);
     }
 }

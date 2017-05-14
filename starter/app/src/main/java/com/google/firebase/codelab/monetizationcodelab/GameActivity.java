@@ -30,9 +30,13 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.ads.reward.RewardedVideoAd;
 import com.google.firebase.codelab.R;
 
 public class GameActivity extends AppCompatActivity {
+    private static final String DEFAULT_AD_UNIT_ID = "ca-app-pub-3940256099942544/6807086514";
     private static final String HINT_EXTRA_KEY = "hint";
     private static final String HINT_WEIGHT_EXTRA_KEY = "hint_weight";
 
@@ -41,6 +45,8 @@ public class GameActivity extends AppCompatActivity {
     private static final int START_TIME = 2000;
     private static final int IMAGE_CHANGE_DURATION = 7000;
     private static final int TOTAL_GAME_DURATION = 13000;
+
+    private RewardedVideoAd mAd;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,6 +73,25 @@ public class GameActivity extends AppCompatActivity {
                 failStage();
             }
         });
+
+        // Load rewarded video ads.
+        mAd = MobileAds.getRewardedVideoAdInstance(this);
+        mAd.loadAd(
+                DEFAULT_AD_UNIT_ID,
+                new AdRequest.Builder().build()
+        );
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        mAd.pause(this);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mAd.resume(this);
     }
 
     private void clearStage () {
@@ -154,7 +179,5 @@ public class GameActivity extends AppCompatActivity {
         if (!hint) {
             hint_mask_view.setVisibility(View.INVISIBLE);
         }
-
-
     }
 }
