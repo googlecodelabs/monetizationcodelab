@@ -20,6 +20,9 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.ads.reward.RewardedVideoAd;
 import com.google.firebase.codelab.R;
 
 public class MainActivity extends AppCompatActivity {
@@ -38,6 +41,4 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
-
-
 }
