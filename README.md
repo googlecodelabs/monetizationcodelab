@@ -1,19 +1,8 @@
 # Monetization from Good to Great with Firebase, in 10 mins
 
-With Firebase Remote Config, A/B Testing, Analytics, and AdMob, finding the sweet spot has become much easier and more streamlined. A/B testing on the fly, or progressively rolling changes out and monitoring important UX metrics not only helps mitigate the risk of introducing new behaviors and changes, but can be set up rather easily.
-
-### Introduction
-
-Ads are an important part of your app's overall user experience. Good ad implementations can effectively contribute to UX and even increase user retention and engagement.
-In this codelab, you're going to introduce a new ad placement variant to an existing app, set up test traffic, and roll out it progressively. We will also share with you tips about what metrics to look at, and how to turn them into actions.
-
-### Getting Started
-
-Clone this repository, open the <code>/starter</code> directory with AndroidStudio. To run this code, you need to add <code>google-services.json</code> at least. 
-See details at [codelab page]
+This repository contains the source code for the [Monetization from Good to Great with Firebase, in 10 mins](https://codelabs.developers.google.com/codelabs/firebase-monetization)
 
 ### License
-
 ```
 Copyright 2017 Google, Inc.
 
